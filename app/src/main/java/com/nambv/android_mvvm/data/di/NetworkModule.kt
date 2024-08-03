@@ -1,5 +1,6 @@
 package com.nambv.android_mvvm.data.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.nambv.android_mvvm.data.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -7,15 +8,19 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
 
     @Singleton
     @Provides
@@ -34,7 +39,7 @@ object NetworkModule {
     fun provideOkHttp(
         interceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
-        val okHttpClient = OkHttpClient().newBuilder();
+        val okHttpClient = OkHttpClient().newBuilder()
         okHttpClient.addInterceptor(interceptor)
         return okHttpClient.build()
     }
@@ -45,9 +50,10 @@ object NetworkModule {
         baseURL: String,
         okHttpClient: OkHttpClient
     ): Retrofit {
+        val contentType = "application/json".toMediaType()
         val retro = Retrofit.Builder().baseUrl(baseURL).client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create()).build();
-        return retro;
+            .addConverterFactory(json.asConverterFactory(contentType)).build()
+        return retro
     }
 
     @Singleton
