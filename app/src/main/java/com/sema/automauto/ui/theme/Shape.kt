@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.theme
+package com.nambv.android_mvvm.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

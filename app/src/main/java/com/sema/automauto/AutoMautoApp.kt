@@ -1,4 +1,4 @@
-package com.sema.automauto
+package com.nambv.android_mvvm
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

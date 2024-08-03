@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.view.search
+package com.nambv.android_mvvm.ui.view.search
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -20,9 +20,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.sema.automauto.R
-import com.sema.automauto.ui.theme.Shapes
-import com.sema.automauto.ui.theme.Typography
+import com.nambv.android_mvvm.R
+import com.nambv.android_mvvm.ui.theme.Shapes
+import com.nambv.android_mvvm.ui.theme.Typography
 import com.sema.component.LoadingBar
 import com.sema.component.SearchTextField
 import com.sema.component.ShowToast

@@ -1,8 +1,8 @@
-package com.sema.automauto.ui.view.search
+package com.nambv.android_mvvm.ui.view.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sema.automauto.MainDispatcherRule
-import com.sema.automauto.domain.usecase.getcars.GetCarsUseCase
+import com.nambv.android_mvvm.MainDispatcherRule
+import com.nambv.android_mvvm.domain.usecase.getcars.GetCarsUseCase
 import com.sema.data.api.ApiService
 import com.sema.data.common.Resource
 import com.sema.data.model.CarSearchResponseItem

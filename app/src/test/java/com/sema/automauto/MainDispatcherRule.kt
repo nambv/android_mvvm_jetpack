@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sema.automauto
+package com.nambv.android_mvvm
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

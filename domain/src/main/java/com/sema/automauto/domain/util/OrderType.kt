@@ -1,4 +1,4 @@
-package com.sema.automauto.domain.util
+package com.nambv.android_mvvm.domain.util
 
 sealed class OrderType {
     object Ascending: OrderType()

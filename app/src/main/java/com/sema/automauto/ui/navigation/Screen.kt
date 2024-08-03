@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.navigation
+package com.nambv.android_mvvm.ui.navigation
 
 sealed class Screen(val route: String) {
     object Cars : Screen("cars")

@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.view.image
+package com.nambv.android_mvvm.ui.view.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -19,7 +19,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.sema.automauto.R
+import com.nambv.android_mvvm.R
 import com.sema.component.LoadingBar
 
 @Composable

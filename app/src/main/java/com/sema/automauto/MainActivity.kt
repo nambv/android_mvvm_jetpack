@@ -1,4 +1,4 @@
-package com.sema.automauto
+package com.nambv.android_mvvm
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.sema.automauto.ui.navigation.NavGraph
-import com.sema.automauto.ui.theme.AutoMautoAppTheme
+import com.nambv.android_mvvm.ui.navigation.NavGraph
+import com.nambv.android_mvvm.ui.theme.MainAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AutoMautoAppMain() {
-    AutoMautoAppTheme {
+    MainAppTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             NavGraph()
         }

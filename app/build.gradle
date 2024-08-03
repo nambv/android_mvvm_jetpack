@@ -7,12 +7,11 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.sema.automauto"
+        applicationId "com.nambv.android_mvvm"
         minSdk 21
-        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -46,7 +45,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    namespace 'com.sema.automauto'
+    namespace 'com.nambv.android_mvvm'
 }
 
 dependencies {

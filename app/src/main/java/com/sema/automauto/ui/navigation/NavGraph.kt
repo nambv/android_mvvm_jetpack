@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.navigation
+package com.nambv.android_mvvm.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sema.automauto.ui.view.image.ImageScreen
-import com.sema.automauto.ui.view.search.CarSearchScreen
+import com.nambv.android_mvvm.ui.view.image.ImageScreen
+import com.nambv.android_mvvm.ui.view.search.CarSearchScreen
 
 @Preview
 @Composable

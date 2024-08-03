@@ -1,4 +1,4 @@
-package com.sema.automauto.domain.util
+package com.nambv.android_mvvm.domain.util
 
 sealed class CarOrder(val orderType: OrderType) {
     class Title(orderType: OrderType): CarOrder(orderType)

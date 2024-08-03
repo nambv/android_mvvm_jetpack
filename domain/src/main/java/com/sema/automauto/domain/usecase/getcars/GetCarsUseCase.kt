@@ -1,7 +1,7 @@
-package com.sema.automauto.domain.usecase.getcars
+package com.nambv.android_mvvm.domain.usecase.getcars
 
-import com.sema.automauto.domain.util.CarOrder
-import com.sema.automauto.domain.util.OrderType
+import com.nambv.android_mvvm.domain.util.CarOrder
+import com.nambv.android_mvvm.domain.util.OrderType
 import com.sema.data.common.Resource
 import com.sema.data.model.CarSearchResponseItem
 import com.sema.data.repository.CarsRepository

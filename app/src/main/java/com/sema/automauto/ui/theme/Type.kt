@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.theme
+package com.nambv.android_mvvm.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,11 +1,11 @@
-package com.sema.automauto.ui.view.search
+package com.nambv.android_mvvm.ui.view.search
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sema.automauto.domain.usecase.getcars.GetCarsUseCase
-import com.sema.automauto.domain.util.CarOrder
-import com.sema.automauto.domain.util.OrderType
+import com.nambv.android_mvvm.domain.usecase.getcars.GetCarsUseCase
+import com.nambv.android_mvvm.domain.util.CarOrder
+import com.nambv.android_mvvm.domain.util.OrderType
 import com.sema.data.common.Resource
 import com.sema.data.model.CarSearchResponseItem
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.sema.automauto.ui.view.image
+package com.nambv.android_mvvm.ui.view.image
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
