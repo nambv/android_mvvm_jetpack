@@ -10,7 +10,6 @@ class CarsRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
     suspend fun getCars(): List<CarSearchResponseItem> {
-        val data = apiService.getCars()
-        return data
+        return apiService.getCars()
     }
 }

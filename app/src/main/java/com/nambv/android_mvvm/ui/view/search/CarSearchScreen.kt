@@ -4,17 +4,27 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.nambv.android_mvvm.R
 import com.nambv.android_mvvm.data.model.CarSearchResponseItem
 import com.nambv.android_mvvm.ui.components.LoadingBar
@@ -22,12 +32,13 @@ import com.nambv.android_mvvm.ui.components.SearchTextField
 import com.nambv.android_mvvm.ui.components.ShowToast
 import com.nambv.android_mvvm.ui.theme.Shapes
 import com.nambv.android_mvvm.ui.theme.Typography
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @Composable
 fun CarSearchScreen(
-    carsViewModel: CarsViewModel = hiltViewModel(),
-    onClick: (String) -> Unit
+    carsViewModel: CarsViewModel = hiltViewModel(), onClick: (String) -> Unit
 ) {
 
     Surface(
@@ -52,10 +63,12 @@ fun CarSearchScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SearchTextField(
-                    value = search, onValueChange = {
+                    value = search,
+                    onValueChange = {
                         search = it
                         carsViewModel.searchCars(it.text)
-                    }, hint = stringResource(R.string.cars_screen_search_hint),
+                    },
+                    hint = stringResource(R.string.cars_screen_search_hint),
                     color = MaterialTheme.colors.background
                 )
                 IconButton(onClick = {
@@ -84,20 +97,20 @@ fun CarsContent(vm: CarsViewModel, onImageClick: (String) -> Unit) {
     }
 }
 
-//@Composable
-//fun CarImage(item: CarSearchResponseItem) {
-//    item.images?.let {
-//        Image(
-//            painter = rememberAsyncImagePainter(it.first().url),
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .size(150.dp)
-//                .padding(end = 8.dp)
-//                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-//        )
-//    }
-//}
+@Composable
+fun CarImage(item: CarSearchResponseItem) {
+    item.images?.let {
+        Image(
+            painter = rememberAsyncImagePainter(it.first().url),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(150.dp)
+                .padding(end = 8.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    }
+}
 
 @Composable
 fun ListItem(item: CarSearchResponseItem, onClick: (CarSearchResponseItem) -> Unit) {
@@ -119,13 +132,12 @@ fun ListItem(item: CarSearchResponseItem, onClick: (CarSearchResponseItem) -> Un
                 .padding(16.dp),
         ) {
 
-//            CarImage(item)
+            CarImage(item)
             Spacer(modifier = Modifier.height(8.dp))
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .padding(8.dp)
+                modifier = Modifier.padding(8.dp)
             ) {
                 Text(
                     text = "€${item.price}",
@@ -157,22 +169,20 @@ fun ListItem(item: CarSearchResponseItem, onClick: (CarSearchResponseItem) -> Un
                     )
                 }
 
-//                item.seller?.let {
-//                    Text(
-//                        text = stringResource(
-//                            R.string.cars_screen_miles,
-//                            "${it.type} ${it.phone} ${it.city}"
-//                        ),
-//                        style = Typography.caption,
-//                    )
-//                }
+                item.seller?.let {
+                    Text(
+                        text = stringResource(
+                            R.string.cars_screen_miles,
+                            "${it.type} ${it.phone} ${it.city}"
+                        ),
+                        style = Typography.caption,
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = item.description,
-                    style = Typography.caption,
-                    maxLines = 2
+                    text = item.description, style = Typography.caption, maxLines = 2
                 )
 
             }
@@ -186,12 +196,12 @@ fun BindList(list: List<CarSearchResponseItem>, onImageClick: (String) -> Unit) 
         items(
             items = list,
             itemContent = {
-//                ListItem(it, onClick = {
-//                    it.images?.first()?.url?.let {
-//                        val encodedUrl = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
-//                        onImageClick.invoke(encodedUrl)
-//                    }
-//                })
+                ListItem(it, onClick = {
+                    it.images?.first()?.url?.let {
+                        val encodedUrl = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
+                        onImageClick.invoke(encodedUrl)
+                    }
+                })
             })
     }
 }
