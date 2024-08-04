@@ -12,8 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "AutoMautoApp"
+rootProject.name = "AndroidMVVM"
 include ':app'
-include ':data'
-include ':component'
-include ':domain'

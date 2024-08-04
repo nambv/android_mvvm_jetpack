@@ -18,10 +18,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private val json = Json {
-        ignoreUnknownKeys = true
-    }
-
     @Singleton
     @Provides
     fun provideBaseURL(): String {
@@ -39,9 +35,8 @@ object NetworkModule {
     fun provideOkHttp(
         interceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
-        val okHttpClient = OkHttpClient().newBuilder()
-        okHttpClient.addInterceptor(interceptor)
-        return okHttpClient.build()
+        val client = OkHttpClient.Builder().addInterceptor(interceptor)
+        return client.build()
     }
 
     @Singleton
@@ -50,9 +45,14 @@ object NetworkModule {
         baseURL: String,
         okHttpClient: OkHttpClient
     ): Retrofit {
-        val contentType = "application/json".toMediaType()
-        val retro = Retrofit.Builder().baseUrl(baseURL).client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory(contentType)).build()
+
+        val retro = Retrofit.Builder()
+            .baseUrl(baseURL)
+            .client(okHttpClient)
+            .addConverterFactory(
+                Json.asConverterFactory("application/json".toMediaType())
+            )
+            .build()
         return retro
     }
 

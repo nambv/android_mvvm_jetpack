@@ -9,5 +9,8 @@ import javax.inject.Inject
 class CarsRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
-    suspend fun getCars(): List<CarSearchResponseItem> = apiService.getCars()
+    suspend fun getCars(): List<CarSearchResponseItem> {
+        val data = apiService.getCars()
+        return data
+    }
 }

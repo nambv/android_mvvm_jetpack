@@ -1,9 +1,9 @@
 package com.nambv.android_mvvm.domain.getcars
 
-import com.nambv.android_mvvm.domain.util.CarOrder
-import com.nambv.android_mvvm.domain.util.OrderType
 import com.nambv.android_mvvm.data.model.CarSearchResponseItem
 import com.nambv.android_mvvm.data.repository.CarsRepository
+import com.nambv.android_mvvm.domain.util.CarOrder
+import com.nambv.android_mvvm.domain.util.OrderType
 import com.nambv.data.common.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -14,7 +14,7 @@ class GetCarsUseCase @Inject constructor(
     private val defaultDispatcher: CoroutineDispatcher
 ) {
 
-    private var carList = listOf<CarSearchResponseItem>()
+    private lateinit var carList: List<CarSearchResponseItem>
 
     suspend operator fun invoke(): Flow<Resource<List<CarSearchResponseItem>>> =
         flow<Resource<List<CarSearchResponseItem>>> {
