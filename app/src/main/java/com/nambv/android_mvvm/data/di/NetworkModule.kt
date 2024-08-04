@@ -18,6 +18,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private val json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        encodeDefaults = false
+    }
+
     @Singleton
     @Provides
     fun provideBaseURL(): String {
@@ -50,7 +56,7 @@ object NetworkModule {
             .baseUrl(baseURL)
             .client(okHttpClient)
             .addConverterFactory(
-                Json.asConverterFactory("application/json".toMediaType())
+                json.asConverterFactory("application/json".toMediaType())
             )
             .build()
         return retro

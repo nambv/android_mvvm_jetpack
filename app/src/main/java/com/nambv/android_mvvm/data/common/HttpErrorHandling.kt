@@ -46,7 +46,10 @@ object HttpErrorParser {
                 Error(ErrorType.NetworkOffline)
             }
 
-            else -> Error(ErrorType.Unknown)
+            else -> Error(
+                type = ErrorType.Unknown,
+                data = HttpErrorData(status = -1, message = throwable?.message, errorKey = "")
+            )
         }
     }
 }

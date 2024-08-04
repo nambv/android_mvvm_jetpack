@@ -5,28 +5,28 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CarSearchResponseItem(
-    @SerialName("colour") val colour: String? = null,
-    @SerialName("description") val description: String = "",
-    @SerialName("firstRegistration") val firstRegistration: String? = null,
-    @SerialName("fuel") val fuel: String = "",
-    @SerialName("id") val id: Int = 0,
-    @SerialName("make") val make: String = "",
-    @SerialName("mileage") val mileage: Int? = null,
-    @SerialName("model") val model: String = "",
-    @SerialName("modelline") val modelline: String = "",
-    @SerialName("price") val price: Int = 0,
-    @SerialName("seller") val seller: Seller? = null,
-    @SerialName("images") val images: List<Image>? = null,
+    @SerialName("colour") val colour: String?,
+    @SerialName("description") val description: String,
+    @SerialName("firstRegistration") val firstRegistration: String?,
+    @SerialName("fuel") val fuel: String,
+    @SerialName("id") val id: Int,
+    @SerialName("make") val make: String,
+    @SerialName("mileage") val mileage: Int?,
+    @SerialName("model") val model: String,
+    @SerialName("modelline") val modelline: String,
+    @SerialName("price") val price: Int,
+    @SerialName("seller") val seller: Seller?,
+    @SerialName("images") val images: List<Image>?,
 )
 
 @Serializable
 data class Image(
-    @SerialName("url") val url: String? = null
+    @SerialName("url") val url: String?
 )
 
 @Serializable
 data class Seller(
-    @SerialName("city") val city: String? = null,
-    @SerialName("phone") val phone: String? = null,
-    @SerialName("type") val type: String? = null,
+    @SerialName("city") val city: String?,
+    @SerialName("phone") val phone: String?,
+    @SerialName("type") val type: String?
 )
