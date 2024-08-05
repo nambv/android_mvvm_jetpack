@@ -21,7 +21,6 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +41,10 @@ import com.nambv.android_mvvm.data.model.User
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UsersListView(viewModel: UsersViewModel = hiltViewModel()) {
-    val items by viewModel.items.observeAsState(initial = emptyList())
-    val isRefreshing by viewModel.isRefreshing.observeAsState(initial = false)
-    val errorMessage by viewModel.errorMessage.observeAsState()
+    val items by viewModel.items.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
+
     val listState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = {
         viewModel.refreshItems()
