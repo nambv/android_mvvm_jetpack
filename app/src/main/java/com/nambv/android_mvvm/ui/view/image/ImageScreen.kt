@@ -55,7 +55,7 @@ fun ImagePager(images: List<String>) {
                     .weight(1f)
                     .fillMaxWidth(),
             ) { page ->
-                CarImage(item = images.get(page))
+                CarImage(item = images[page])
             }
         }
     }
