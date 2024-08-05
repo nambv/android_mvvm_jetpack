@@ -196,7 +196,7 @@ fun BindList(list: List<CarSearchResponseItem>, onImageClick: (String) -> Unit) 
         items(
             items = list,
             itemContent = {
-                ListItem(it, onClick = {
+                 ListItem(it, onClick = {
                     it.images?.first()?.url?.let {
                         val encodedUrl = URLEncoder.encode(it, StandardCharsets.UTF_8.toString())
                         onImageClick.invoke(encodedUrl)
