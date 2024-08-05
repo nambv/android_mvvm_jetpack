@@ -3,7 +3,7 @@ package com.nambv.android_mvvm.ui.view.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nambv.android_mvvm.MainDispatcherRule
 import com.nambv.android_mvvm.data.api.ApiService
-import com.nambv.android_mvvm.data.repository.CarsRepository
+import com.nambv.android_mvvm.data.repository.UsersRepository
 import com.nambv.android_mvvm.domain.getcars.GetCarsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -28,7 +28,7 @@ class CarsViewModelTest {
     lateinit var apiService: ApiService
 
     @Mock
-    lateinit var repository: CarsRepository
+    lateinit var repository: UsersRepository
 
     @Mock
     lateinit var getCarsUseCase: GetCarsUseCase
@@ -47,14 +47,14 @@ class CarsViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        repository = CarsRepository(apiService)
+        repository = UsersRepository(apiService)
         getCarsUseCase = GetCarsUseCase(repository, coroutineRule.testDispatcher)
         viewModel = CarsViewModel(getCarsUseCase)
     }
 
     @Test
     fun getCars_isSuccess() = runTest {
-        whenever(repository.getCars()).thenReturn(any())
+        whenever(repository.getUsers()).thenReturn(any())
         viewModel.getCars()
         getCarsUseCase().collect {
             assertEquals(CarsListUiStateReady(cars = it.data), viewModel.state.value)
@@ -63,7 +63,7 @@ class CarsViewModelTest {
 
     @Test
     fun getCars_isFail() = runTest {
-        whenever(repository.getCars()) doAnswer {
+        whenever(repository.getUsers()) doAnswer {
             throw IOException()
         }
         viewModel.getCars()

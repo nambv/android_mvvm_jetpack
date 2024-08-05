@@ -1,7 +1,7 @@
 package com.nambv.android_mvvm.domain.getcars
 
 import com.nambv.android_mvvm.data.model.CarSearchResponseItem
-import com.nambv.android_mvvm.data.repository.CarsRepository
+import com.nambv.android_mvvm.data.repository.UsersRepository
 import com.nambv.android_mvvm.domain.util.CarOrder
 import com.nambv.android_mvvm.domain.util.OrderType
 import com.nambv.data.common.Resource
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class GetCarsUseCase @Inject constructor(
-    private val repository: CarsRepository,
+    private val repository: UsersRepository,
     private val defaultDispatcher: CoroutineDispatcher
 ) {
 
@@ -20,7 +20,7 @@ class GetCarsUseCase @Inject constructor(
         flow<Resource<List<CarSearchResponseItem>>> {
             try {
                 emit(Resource.loading())
-                carList = repository.getCars()
+                carList = repository.getUsers()
                 emit(Resource.success(carList))
             } catch (e: Throwable) {
                 emit(Resource.error(e))

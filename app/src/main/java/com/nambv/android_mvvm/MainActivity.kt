@@ -3,30 +3,27 @@ package com.nambv.android_mvvm
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.nambv.android_mvvm.ui.navigation.NavGraph
-import com.nambv.android_mvvm.ui.theme.MainAppTheme
+import com.nambv.android_mvvm.ui.theme.MyAppTheme
+import com.nambv.android_mvvm.ui.view.screens.UsersViewModel
+import com.nambv.android_mvvm.ui.view.screens.UsersListView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel: UsersViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AutoMautoAppMain()
+            MyAppTheme {
+                Surface(color = MaterialTheme.colors.background) {
+                    UsersListView(viewModel = viewModel)
+                }
+            }
         }
     }
 }
 
-@Composable
-fun AutoMautoAppMain() {
-    MainAppTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            NavGraph()
-        }
-    }
-}

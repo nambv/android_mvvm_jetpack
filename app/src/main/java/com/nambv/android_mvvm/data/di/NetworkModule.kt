@@ -27,7 +27,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideBaseURL(): String {
-        return "http://private-fe87c-simpleclassifieds.apiary-mock.com/"
+        return "https://randomuser.me/api/"
     }
 
     @Singleton
@@ -51,15 +51,13 @@ object NetworkModule {
         baseURL: String,
         okHttpClient: OkHttpClient
     ): Retrofit {
-
-        val retro = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(baseURL)
             .client(okHttpClient)
             .addConverterFactory(
                 json.asConverterFactory("application/json".toMediaType())
             )
             .build()
-        return retro
     }
 
     @Singleton

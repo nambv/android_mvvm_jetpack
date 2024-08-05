@@ -1,15 +1,15 @@
 package com.nambv.android_mvvm.data.repository
 
 import com.nambv.android_mvvm.data.api.ApiService
-import com.nambv.android_mvvm.data.model.CarSearchResponseItem
+import com.nambv.android_mvvm.data.model.User
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class CarsRepository @Inject constructor(
+class UsersRepository @Inject constructor(
     private val apiService: ApiService,
 ) {
-    suspend fun getCars(): List<CarSearchResponseItem> {
-        return apiService.getCars()
+    suspend fun getUsers(page: Int, results: Int): List<User> {
+        return apiService.getUsers(page, results)
     }
 }

@@ -10,24 +10,18 @@ private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
     secondary = Teal200,
-    onSurface = colorSnow,
-    surface = Black200,
-    background = Black100
 )
 
 private val LightColorPalette = lightColors(
     primary = Purple500,
     primaryVariant = Purple700,
     secondary = Teal200,
-    onSurface = Black200,
-    surface = colorSnow,
-    background = white
 )
 
 @Composable
-fun MainAppTheme(
+fun MyAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
         DarkColorPalette
