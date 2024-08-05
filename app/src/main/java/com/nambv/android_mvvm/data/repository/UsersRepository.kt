@@ -1,6 +1,7 @@
 package com.nambv.android_mvvm.data.repository
 
 import com.nambv.android_mvvm.data.api.ApiService
+import com.nambv.android_mvvm.data.model.User
 import com.nambv.android_mvvm.data.model.UsersResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

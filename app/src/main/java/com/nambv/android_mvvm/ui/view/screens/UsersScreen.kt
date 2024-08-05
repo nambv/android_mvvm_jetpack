@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -40,7 +42,7 @@ import com.nambv.android_mvvm.data.model.User
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun UsersListView(viewModel: UsersViewModel = hiltViewModel()) {
+fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
     val items by viewModel.items.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
@@ -57,22 +59,35 @@ fun UsersListView(viewModel: UsersViewModel = hiltViewModel()) {
         }
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
-        LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
-            items(items) { item ->
-                UserInfoCard(user = item)
-            }
-        }
-
-        PullRefreshIndicator(
-            refreshing = isRefreshing, state = pullRefreshState, Modifier.align(
-                Alignment.TopCenter
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("User List") },
+                actions = {
+                    IconButton(onClick = { /* Handle actions here */ }) {
+                        Icon(Icons.Filled.Search, contentDescription = "Search")
+                    }
+                }
             )
-        )
+        }
+    ) { innerPadding ->
+        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
+            LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+                items(items) { item ->
+                    UserInfoCard(user = item)
+                }
+            }
 
-        errorMessage?.let {
-            Box(modifier = Modifier.align(Alignment.Center)) {
-                Text(text = it, color = MaterialTheme.colors.error)
+            PullRefreshIndicator(
+                refreshing = isRefreshing, state = pullRefreshState, Modifier.align(
+                    Alignment.TopCenter
+                )
+            )
+
+            errorMessage?.let {
+                Box(modifier = Modifier.align(Alignment.Center)) {
+                    Text(text = it, color = MaterialTheme.colors.error)
+                }
             }
         }
     }
