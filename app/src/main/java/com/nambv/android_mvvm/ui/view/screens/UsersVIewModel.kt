@@ -13,10 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class UsersViewModel @Inject constructor(private val repository: UsersRepository) : ViewModel() {
     private val _items = MutableLiveData<List<User>>()
-    val items: LiveData<List<User>> get() = _items
+    val items: MutableLiveData<List<User>> get() = _items
 
     private val _isRefreshing = MutableLiveData(false)
     val isRefreshing: LiveData<Boolean> get() = _isRefreshing
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
 
     private var currentPage = 1
     private val pageSize = 20
@@ -26,10 +29,14 @@ class UsersViewModel @Inject constructor(private val repository: UsersRepository
     }
 
     fun fetchItems() {
-        viewModelScope.launch {
-            val newUsers = repository.getUsers(currentPage, pageSize)
-            _items.value = _items.value.orEmpty() + newUsers
-            currentPage++
+        try {
+            viewModelScope.launch {
+                val newUsers = repository.getUsers(currentPage, pageSize).users
+                _items.value = _items.value.orEmpty() + newUsers
+                currentPage++
+            }
+        } catch (e: Exception) {
+            _errorMessage.value = "Failed to fetch items: ${e.message}"
         }
     }
 
@@ -38,7 +45,7 @@ class UsersViewModel @Inject constructor(private val repository: UsersRepository
             _isRefreshing.value = true
 
             currentPage = 1
-            val newUsers = repository.getUsers(currentPage, pageSize)
+            val newUsers = repository.getUsers(currentPage, pageSize).users
 
             _items.value = newUsers
             _isRefreshing.value = false

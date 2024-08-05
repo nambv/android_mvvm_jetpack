@@ -1,12 +1,12 @@
 package com.nambv.android_mvvm.data.api
 
-import com.nambv.android_mvvm.data.model.User
+import com.nambv.android_mvvm.data.model.UsersResult
 import retrofit2.http.*
 
 interface ApiService {
 
-    @GET("/")
+    @GET("/api")
     suspend fun getUsers(
         @Query("page") page: Int, @Query("results") results: Int
-    ): List<User>
+    ): UsersResult
 }
