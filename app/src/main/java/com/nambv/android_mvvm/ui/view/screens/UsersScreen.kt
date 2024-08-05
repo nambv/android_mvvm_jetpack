@@ -36,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.nambv.android_mvvm.R
+import com.nambv.android_mvvm.data.ViewState
 import com.nambv.android_mvvm.data.model.Name
 import com.nambv.android_mvvm.data.model.Picture
 import com.nambv.android_mvvm.data.model.User
@@ -45,7 +46,7 @@ import com.nambv.android_mvvm.data.model.User
 fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
     val items by viewModel.items.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     val listState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = {
@@ -59,34 +60,48 @@ fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("User List") },
-                actions = {
-                    IconButton(onClick = { /* Handle actions here */ }) {
-                        Icon(Icons.Filled.Search, contentDescription = "Search")
+    Scaffold(topBar = {
+        TopAppBar(title = { Text("User List") }, actions = {
+            IconButton(onClick = { /* Handle actions here */ }) {
+                Icon(Icons.Filled.Search, contentDescription = "Search")
+            }
+        })
+    }) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            when (state) {
+                is ViewState.Loading -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
                     }
                 }
-            )
-        }
-    ) { innerPadding ->
-        Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
-            LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
-                items(items) { item ->
-                    UserInfoCard(user = item)
+
+                is ViewState.Success -> {
+                    Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
+                        LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+                            items(items) { item ->
+                                UserInfoCard(user = item)
+                            }
+                        }
+
+                        PullRefreshIndicator(
+                            refreshing = isRefreshing, state = pullRefreshState, Modifier.align(
+                                Alignment.TopCenter
+                            )
+                        )
+                    }
                 }
-            }
 
-            PullRefreshIndicator(
-                refreshing = isRefreshing, state = pullRefreshState, Modifier.align(
-                    Alignment.TopCenter
-                )
-            )
-
-            errorMessage?.let {
-                Box(modifier = Modifier.align(Alignment.Center)) {
-                    Text(text = it, color = MaterialTheme.colors.error)
+                is ViewState.Error -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = (state as ViewState.Error).message,
+                            color = MaterialTheme.colors.error
+                        )
+                    }
                 }
             }
         }
@@ -114,11 +129,8 @@ fun UserInfoCard(user: User) {
                 .padding(16.dp)
         ) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(user.picture!!.thumbnail)
-                    .crossfade(true)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .build(),
+                model = ImageRequest.Builder(LocalContext.current).data(user.picture!!.thumbnail)
+                    .crossfade(true).placeholder(R.drawable.ic_launcher_background).build(),
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
@@ -143,22 +155,19 @@ fun UserInfoCard(user: User) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = user.email,
-                    fontSize = 16.sp
+                    text = user.email, fontSize = 16.sp
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = user.phone,
-                    fontSize = 16.sp
+                    text = user.phone, fontSize = 16.sp
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = user.gender,
-                    fontSize = 16.sp
+                    text = user.gender, fontSize = 16.sp
                 )
             }
         }
