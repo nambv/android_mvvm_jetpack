@@ -1,34 +1,40 @@
-//package com.nambv.android_mvvm.ui.navigation
-//
-//import androidx.compose.runtime.Composable
-//import androidx.compose.runtime.remember
-//import androidx.compose.ui.tooling.preview.Preview
-//import androidx.navigation.NavHostController
-//import androidx.navigation.compose.NavHost
-//import androidx.navigation.compose.composable
-//import androidx.navigation.compose.rememberNavController
-//import com.nambv.android_mvvm.ui.view.image.ImageScreen
-//import com.nambv.android_mvvm.ui.view.search.CarSearchScreen
-//
-//@Preview
-//@Composable
-//fun NavGraph() {
-//    val navController = rememberNavController()
-//    val actions = remember(navController) { MainActions(navController) }
-//
-//    NavHost(navController, startDestination = Screen.Cars.route) {
-//        composable(Screen.Cars.route) { CarSearchScreen { actions.goToImagesScreen.invoke(it) } }
-//        composable(Screen.Images.route) { ImageScreen() }
-//    }
-//}
-//
-//class MainActions(private val navController: NavHostController) {
-//
-//    val goToCarsScreen: () -> Unit = {
-//        navController.navigate(Screen.Cars.route)
-//    }
-//
-//    val goToImagesScreen: (String) -> Unit = {
-//        navController.navigate(Screen.Images.createRoute(it))
-//    }
-//}
+package com.nambv.android_mvvm.ui.navigation
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.nambv.android_mvvm.data.model.User
+import com.nambv.android_mvvm.ui.view.screens.UserDetailScreen
+import com.nambv.android_mvvm.ui.view.screens.UsersScreen
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@Preview
+@Composable
+fun NavGraph(starDestination: String = "users") {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = starDestination
+    ) {
+        composable("users") {
+            UsersScreen(navController)
+        }
+        composable(
+            "user_details/{user}",
+            arguments = listOf(
+                navArgument("user") {
+                    type = NavType.ParcelableType(User::class.java)
+                }
+            )
+        ) { backStackEntry ->
+            val user = backStackEntry.arguments?.getParcelable<User>("user", User::class.java)
+            UserDetailScreen(navController, user = user)
+        }
+    }
+}

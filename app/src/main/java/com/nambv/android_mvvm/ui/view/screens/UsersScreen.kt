@@ -1,6 +1,7 @@
 package com.nambv.android_mvvm.ui.view.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,21 +30,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.nambv.android_mvvm.R
 import com.nambv.android_mvvm.data.ViewState
-import com.nambv.android_mvvm.data.model.Name
-import com.nambv.android_mvvm.data.model.Picture
 import com.nambv.android_mvvm.data.model.User
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
+fun UsersScreen(
+    navController: NavController, viewModel: UsersViewModel = hiltViewModel()
+) {
     val items by viewModel.items.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
     val state by viewModel.state.collectAsState()
@@ -83,7 +84,9 @@ fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
                     Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
                         LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
                             items(items) { item ->
-                                UserInfoCard(user = item)
+                                UserInfoCard(user = item) {
+                                    navController.navigate("user_detail/${item.toString()}")
+                                }
                             }
                         }
 
@@ -115,11 +118,12 @@ fun UsersScreen(viewModel: UsersViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun UserInfoCard(user: User) {
+fun UserInfoCard(user: User, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
     ) {
@@ -172,22 +176,4 @@ fun UserInfoCard(user: User) {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun UserInfoCardPreview() {
-    UserInfoCard(
-        user = User(
-            name = Name(last = "Nam"),
-            email = "john.doe@example.com",
-            phone = "+123456789",
-            gender = "male",
-            picture = Picture(
-                large = "https://randomuser.me/api/portraits/men/75.jpg",
-                medium = "https://randomuser.me/api/portraits/med/men/75.jpg",
-                thumbnail = "https://randomuser.me/api/portraits/thumb/men/75.jpg",
-            )
-        )
-    )
 }
