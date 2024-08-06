@@ -184,7 +184,9 @@ fun UserInfoCardPreview() {
             phone = "+123456789",
             gender = "male",
             picture = Picture(
-                thumbnail = "https://example.com/avatar.jpg"
+                large = "https://randomuser.me/api/portraits/men/75.jpg",
+                medium = "https://randomuser.me/api/portraits/med/men/75.jpg",
+                thumbnail = "https://randomuser.me/api/portraits/thumb/men/75.jpg",
             )
         )
     )

@@ -34,5 +34,5 @@ data class Name(
 
 @Serializable
 data class Picture(
-    val thumbnail: String = ""
+    val large: String = "", val medium: String = "", val thumbnail: String = ""
 )
