@@ -1,6 +1,6 @@
-package com.nambv.android_mvvm.data.api
+package com.nambv.android_mvvm.data.remote
 
-import com.nambv.android_mvvm.data.model.UsersResult
+import com.nambv.android_mvvm.data.remote.dto.UsersResultDto
 import retrofit2.http.*
 
 interface ApiService {
@@ -8,5 +8,5 @@ interface ApiService {
     @GET("/api")
     suspend fun getUsers(
         @Query("page") page: Int, @Query("results") results: Int
-    ): UsersResult
+    ): UsersResultDto
 }

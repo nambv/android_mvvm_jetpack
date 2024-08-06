@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.gson.Gson
 import com.nambv.android_mvvm.data.model.User
 import com.nambv.android_mvvm.ui.view.screens.UserDetailScreen
 import com.nambv.android_mvvm.ui.view.screens.UsersScreen
@@ -26,15 +27,16 @@ fun NavGraph(starDestination: String = "users") {
             UsersScreen(navController)
         }
         composable(
-            "user_details/{user}",
+            "userDetail/{user}",
             arguments = listOf(
                 navArgument("user") {
-                    type = NavType.ParcelableType(User::class.java)
+                    type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
-            val user = backStackEntry.arguments?.getParcelable<User>("user", User::class.java)
-            UserDetailScreen(navController, user = user)
+            val userJson = backStackEntry.arguments?.getString("user")
+            val user = Gson().fromJson(userJson, User::class.java)
+            UserDetailScreen(navController = navController, user = user)
         }
     }
 }

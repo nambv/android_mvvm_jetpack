@@ -1,7 +1,7 @@
 package com.nambv.android_mvvm.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.nambv.android_mvvm.data.api.ApiService
+import com.nambv.android_mvvm.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

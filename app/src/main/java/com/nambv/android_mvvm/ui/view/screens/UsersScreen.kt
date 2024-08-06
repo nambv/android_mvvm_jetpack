@@ -36,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.gson.Gson
 import com.nambv.android_mvvm.R
 import com.nambv.android_mvvm.data.ViewState
 import com.nambv.android_mvvm.data.model.User
@@ -45,9 +46,9 @@ import com.nambv.android_mvvm.data.model.User
 fun UsersScreen(
     navController: NavController, viewModel: UsersViewModel = hiltViewModel()
 ) {
-    val items by viewModel.items.collectAsState()
-    val isRefreshing by viewModel.isRefreshing.collectAsState()
-    val state by viewModel.state.collectAsState()
+    val items = viewModel.items.collectAsState().value
+    val isRefreshing = viewModel.isRefreshing.collectAsState().value
+    val state = viewModel.state.collectAsState().value
 
     val listState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = {
@@ -83,9 +84,10 @@ fun UsersScreen(
                 is ViewState.Success -> {
                     Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
                         LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
-                            items(items) { item ->
-                                UserInfoCard(user = item) {
-                                    navController.navigate("user_detail/${item.toString()}")
+                            items(items) { user ->
+                                UserInfoCard(user = user) {
+                                    val userJson = Gson().toJson(user)
+                                    navController.navigate("userDetail/$userJson")
                                 }
                             }
                         }
